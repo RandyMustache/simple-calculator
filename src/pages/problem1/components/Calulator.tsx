@@ -1,6 +1,4 @@
-import { Container } from '@mui/material'
 import dayjs from 'dayjs'
-import React from 'react'
 
 import { useFetch } from 'usehooks-ts'
 import { IExchange } from '../../../types/interface'
@@ -19,7 +17,7 @@ interface IData {
   currencyPair: string
   depositAmount: string
   depositRequired: boolean
-  fixedSide: "buy" | "sell"
+  fixedSide: 'buy' | 'sell'
   midMarketRate: string
   partnerRate?: string
   settlementCutOffTime: string
@@ -32,25 +30,32 @@ const Calculator = (props: IExchange) => {
 
   const { data, error } = useFetch<IData>(url)
 
-  if (error) return <p>There was an error getting the data, please try again.</p>
+  if (error)
+    return <p>There was an error getting the data, please try again.</p>
   if (!data) return <p>Loading...</p>
-  const currentTimezeone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const currentTimezeone = Intl.DateTimeFormat().resolvedOptions().timeZone
   const buyAmount: number = Number(data.clientBuyAmount)
-  const markup: number = ((markupValue / 100) * buyAmount)
+  const markup: number = (markupValue / 100) * buyAmount
   const markupRounded: number = Math.round(markup * 100) / 100
   const finalRate: number = buyAmount - markupRounded
   console.log(data.settlementCutOffTime)
   return (
     <>
-      <p>Buying ${data.clientSellAmount} {data.clientSellCurrency}</p>
-      <p>${finalRate} selling at a conversion rate of ${data.midMarketRate}</p>
+      <p>
+        Buying ${data.clientSellAmount} {data.clientSellCurrency}
+      </p>
+      <p>
+        ${finalRate} selling at a conversion rate of ${data.midMarketRate}
+      </p>
       <p>This is comprised of a base rate of: ${data.clientBuyAmount}</p>
       <p>Total Fees: ${markupRounded} </p>
-      <p>This exchange rate is valid until {dayjs(data.settlementCutOffTime).tz(currentTimezeone).format('DD/MM/YYYY HH:MMA')}</p>
+      <p>
+        This exchange rate is valid until{' '}
+        {dayjs(data.settlementCutOffTime)
+          .tz(currentTimezeone)
+          .format('DD/MM/YYYY HH:MMA')}
+      </p>
     </>
-
-
-
   )
 }
 
