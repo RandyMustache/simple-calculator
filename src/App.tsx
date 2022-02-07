@@ -1,23 +1,18 @@
-import React from 'react';
-import logo from './logo.svg';
+import { Container } from "@mui/material";
+import * as React from "react";
 import './App.css';
+import Problem1 from './pages/problem1/Problem1'
 
-function App() {
+
+const App: React.FC =() => {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <Container maxWidth='sm'>
+
+        <h1>Currency Calculator</h1>
+        <Problem1/>
+        </Container>
       </header>
     </div>
   );
